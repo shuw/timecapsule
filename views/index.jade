@@ -13,7 +13,7 @@ html(lang="en")
     form(action="/new", method="POST")
       - defaultDate = "1/1/" + (new Date().getFullYear() + 1)
       input(type="text", name="capsule[time]", value=defaultDate)
-      textarea(name="capsule[payload]", rows="10", cols="50")
+      textarea(name="capsule[message]", rows="10", cols="50")
         | Write your message here.
       input(type="submit", value="Submit") Submit
     != js('timecapsule')

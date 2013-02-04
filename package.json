@@ -7,7 +7,8 @@
     "connect": "2.7.X",
     "connect-assets": "2.2.X",
     "less": "1.3.X",
-    "jade": "0.28.X"
+    "jade": "0.28.X",
+    "moment": "1.7.X"
   },
   "engines": {
     "node": "0.6.x"
