@@ -5,13 +5,14 @@ html(lang="en")
     title Timecapsule
     != css('jquery-ui-timepicker-addon')
     != css('timecapsule')
-    link(href="http://code.jquery.com/ui/1.10.0/themes/base/jquery-ui.css", rel="stylesheet", type="text/css")
-    script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js")
+    link(href="://code.jquery.com/ui/1.10.0/themes/base/jquery-ui.css", rel="stylesheet", type="text/css")
+    script(src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js")
     script(src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.0/jquery-ui.min.js")
     != js('jquery-ui-timepicker-addon')
   body
-    form
-      input(type="text", name="time")
-      textarea(name="payload", rows="10", cols="50")
+    form(action="/create", method="POST")
+      input(type="text", name="capsule[time]")
+      textarea(name="capsule[payload]", rows="10", cols="50")
+      input(type="submit", value="Submit") Submit
     != js('timecapsule')
 

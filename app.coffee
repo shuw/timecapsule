@@ -3,6 +3,7 @@ express = require 'express'
 jade = require 'jade'
 
 app = express()
+app.use(require('connect').bodyParser());
 
 app.configure ->
   app.set 'view engine', 'jade'
@@ -11,6 +12,9 @@ app.configure ->
   app.use require('connect-assets')()
 
 app.get '/', (request, response) -> response.render 'timecapsule'
+
+app.post '/create', (request, response) ->
+		debugger
 
 server = app.listen(process.env.PORT || 8080)
 console.log 'Express server started on port %s', server.address().port
