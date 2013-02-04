@@ -1,2 +1,2 @@
-$('form input[name="time"]').datetimepicker()
+$('form input[name="capsule[time]"]').datetimepicker()
 

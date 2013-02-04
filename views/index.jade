@@ -1,0 +1,20 @@
+!!! 5
+html(lang="en")
+  head
+    meta(charset="utf-8")
+    title Timecapsule
+    != css('jquery-ui-timepicker-addon')
+    != css('timecapsule')
+    link(href="http://code.jquery.com/ui/1.10.0/themes/base/jquery-ui.css", rel="stylesheet", type="text/css")
+    script(src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js")
+    script(src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.0/jquery-ui.min.js")
+    != js('jquery-ui-timepicker-addon')
+  body
+    form(action="/new", method="POST")
+      - defaultDate = "1/1/" + (new Date().getFullYear() + 1)
+      input(type="text", name="capsule[time]", value=defaultDate)
+      textarea(name="capsule[payload]", rows="10", cols="50")
+        | Write your message here.
+      input(type="submit", value="Submit") Submit
+    != js('timecapsule')
+
