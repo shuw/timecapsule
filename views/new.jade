@@ -3,4 +3,12 @@ extends layout
 block title
   | Your Timecapsule
 block body
+  div= "Your time capsule will be ready on " + locals.openTimeFormatted
+
   = locals.capsule
+
+  - if (locals.capsule_url)
+    .capsule_link
+      | You may also share your capsule with 
+      a(href=locals.capsule_url) this link
+      | .

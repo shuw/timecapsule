@@ -27,7 +27,13 @@ app.post '/new', (request, response) ->
   crypted = cipher.update(JSON.stringify(payload),'utf8', 'base64')
   crypted += cipher.final('base64')
 
-  response.render 'new', locals: capsule: crypted
+  if crypted.length < 1800
+    url = "http://timebottle.herokuapp.com/view?capsule=" + encodeURIComponent(crypted)
+
+  response.render 'new', locals:
+    openTimeFormatted: moment(payload.openTime).format('MMMM Do YYYY, h:mm a')
+    capsule: crypted
+    capsule_url: url
 
 server = app.listen(process.env.PORT || 8080)
 console.log 'Express server started on port %s', server.address().port
