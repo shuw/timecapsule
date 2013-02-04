@@ -1,5 +1,32 @@
 extends layout
 
 block body
-  | View your time capsule here
+  - if (locals.gotCapsule)
+    .capsule
+      - if (locals.canOpen)
+        .details
+          .createDate
+            = "This capsule was created on " + locals.createTimeFormatted + "."
+            br
+            = "It was sealed for " + locals.sealedDurationDays + " days and "
+            = "released on " + locals.openTimeFormatted
+        .message
+          = locals.message
+      - else
+        .message
+          | You can open this time capsule 
+          = locals.openTimeFromNow
+          | . 
+        .details
+          .createDate
+            p
+              | When can I open this capsule?
+              br
+              = locals.openTimeFormatted
+            p
+              | When was this capsule created?
+              br
+              = locals.createTimeFormatted
 
+  - else
+    | Paste your capsule below (TODO):

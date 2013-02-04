@@ -4,6 +4,9 @@ jade = require 'jade'
 crypto = require 'crypto'
 moment = require 'moment'
 
+CRYPTO_SECRET = process.env.CRYPTO_SECRET || 'testmode'
+TIME_FORMAT = 'MMMM Do YYYY, h:mma'
+
 app = express()
 app.use(require('connect').bodyParser())
 
@@ -15,6 +18,34 @@ app.configure ->
 
 app.get '/', (request, response) -> response.render 'index'
 
+app.get '/view', (request, response) ->
+  if request.query.capsule
+    gotCapsule = true
+
+    decipher = crypto.createDecipher('aes-256-cbc', CRYPTO_SECRET)
+    dec = decipher.update(request.query.capsule, 'base64', 'utf8')
+    dec += decipher.final('utf8')
+    payload = JSON.parse(dec)
+
+    createTime = moment.unix(payload.createTime)
+    openTime = moment.unix(payload.openTime)
+    sealedDurationDays = Math.max(openTime.diff(createTime, 'days'), 0)
+
+    if moment() >= openTime
+      canOpen = true
+      message = payload.message
+
+  response.render 'view', locals:
+    gotCapsule: gotCapsule
+    canOpen: canOpen
+    message: message
+    sealedDurationDays: sealedDurationDays
+    openTimeFromNow: openTime.fromNow()
+    openTimeFormatted: openTime.format(TIME_FORMAT)
+    createTimeFromNow: createTime.fromNow()
+    createTimeFormatted: createTime.format(TIME_FORMAT)
+
+
 app.post '/new', (request, response) ->
   capsule = request.body.capsule
   payload =
@@ -22,16 +53,15 @@ app.post '/new', (request, response) ->
     openTime: moment(capsule.time).unix()
     message: capsule.message
 
-  secret = process.env.CRYPTO_SECRET || 'testmode'
-  cipher = crypto.createCipher('aes-256-cbc', secret)
+  cipher = crypto.createCipher('aes-256-cbc', CRYPTO_SECRET)
   crypted = cipher.update(JSON.stringify(payload),'utf8', 'base64')
   crypted += cipher.final('base64')
 
   if crypted.length < 1800
-    url = "http://timebottle.herokuapp.com/view?capsule=" + encodeURIComponent(crypted)
+    url = "/view?capsule=" + encodeURIComponent(crypted)
 
   response.render 'new', locals:
-    openTimeFormatted: moment(payload.openTime).format('MMMM Do YYYY, h:mm a')
+    openTimeFormatted: moment.unix(payload.openTime).format(TIME_FORMAT)
     capsule: crypted
     capsule_url: url
 
