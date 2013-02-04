@@ -10,7 +10,7 @@ app.configure ->
   app.set 'view options', layout: false
   app.use require('connect-assets')()
 
-app.get '/', (request, response) -> response.render 'index'
+app.get '/', (request, response) -> response.render 'timecapsule'
 
 server = app.listen(process.env.PORT || 8080)
 console.log 'Express server started on port %s', server.address().port

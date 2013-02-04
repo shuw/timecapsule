@@ -1,0 +1,17 @@
+!!! 5
+html(lang="en")
+  head
+    meta(charset="utf-8")
+    title Timecapsule
+    != css('jquery-ui-timepicker-addon')
+    != css('timecapsule')
+    link(href="http://code.jquery.com/ui/1.10.0/themes/base/jquery-ui.css", rel="stylesheet", type="text/css")
+    script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js")
+    script(src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.0/jquery-ui.min.js")
+    != js('jquery-ui-timepicker-addon')
+  body
+    form
+      input(type="text", name="time")
+      textarea(name="payload", rows="10", cols="50")
+    != js('timecapsule')
+
